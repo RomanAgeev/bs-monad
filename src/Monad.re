@@ -1,25 +1,11 @@
-module type MonadType = {
+module type T = {
     type t('a);
 
+    let bind: (t('a), 'a => t('b)) => t('b);
     let return: 'a => t('a);
-
-    let (>>=): (t('a), 'a => t('b)) => t('b);
 };
 
-module type PromiseMonadType = {
-    include MonadType;
-
-    let throw: exn => t('a);
-    
-    let (>>|): (t('a), Js.Promise.error => t('a)) => t('a);
-};
-
-module PromiseMonad: PromiseMonadType = {
-    type t('a) = Js.Promise.t('a);
-
-    let return = Js.Promise.resolve;
-    let throw = x => Js.Promise.reject(raise(x));
-
-    let (>>=) = (x, f) => Js.Promise.then_(f, x);
-    let (>>|) = (x, f) => Js.Promise.catch(f, x);
-};
+module Ex = (M: T) => {
+    let (>>=) = M.bind;
+    let (>=>) = (f: 'a => M.t('b), g: 'b => M.t('c)): ('a => M.t('c)) => x => f(x) >>= g;
+}
