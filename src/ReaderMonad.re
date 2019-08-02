@@ -13,6 +13,6 @@ module Make = (E: { type t; }): (T with type e := E.t) => {
     let make = x => x;
     let extract = x => x;
 
-    let bind = (rx, f) => e => e |> (e |> rx |> f);
+    let bind = (rx, f) => env => env |> (env |> rx |> f);
     let return = x => _ => x;
 };
