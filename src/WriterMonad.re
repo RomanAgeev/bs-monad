@@ -1,11 +1,13 @@
-module type T = (M: Monoid.T) => {
+module type T = {
     include Monad.T;
 
-    let make: ('a, M.t) => t('a);
-    let extract: t('a) => ('a, M.t);
+    type m;
+
+    let make: ('a, m) => t('a);
+    let extract: t('a) => ('a, m);
 }
 
-module Make: T = (M: Monoid.T) => {
+module Make = (M: Monoid.T): (T with type m := M.t) => {
     type t('a) = ('a, M.t);
 
     let bind = (x, f) => {
