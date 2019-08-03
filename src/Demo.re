@@ -57,3 +57,19 @@ let () = {
 
     ("Roman", "Ageev") |> (process("Hello") |> extract) |> print_endline;
 };
+
+module NumberMonad = StateMonad.Make({ type t = int });
+
+module NumberEx = Monad.Ex(NumberMonad);
+
+let () = {
+    open NumberMonad;
+    open NumberEx;
+
+    let inc = x => make(s => (x + s, s * 2));
+    let process = inc >=> inc;
+
+    let (result, state) = 2 |> (process(1) |> extract);
+    "result " ++ string_of_int(result) |> print_endline;
+    "state " ++ string_of_int(state) |> print_endline;
+};

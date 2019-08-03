@@ -10,9 +10,9 @@ module type T = {
 module Make = (E: { type t; }): (T with type e := E.t) => {
     type t('a) = E.t => 'a;
 
-    let make = x => x;
-    let extract = x => x;
-
     let bind = (rx, f) => env => env |> (env |> rx |> f);
     let return = x => _ => x;
+
+    let make = x => x;
+    let extract = x => x;
 };
