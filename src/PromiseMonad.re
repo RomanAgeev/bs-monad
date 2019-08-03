@@ -3,6 +3,8 @@ module type T = {
 
     let throw: exn => t('a);
     let catch: (t('a), Js.Promise.error => t('a)) => t('a);
+    let make: Js.Promise.t('a) => t('a);
+    let extract: t('a) => Js.Promise.t('a);
 };
 
 module Make: T = {
@@ -13,6 +15,8 @@ module Make: T = {
 
     let throw = x => Js.Promise.reject(raise(x));
     let catch = (x, f) => Js.Promise.catch(f, x);
+    let make = x => x;
+    let extract = x => x;
 };
 
 module Ex = {
