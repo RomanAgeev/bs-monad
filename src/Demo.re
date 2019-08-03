@@ -73,3 +73,19 @@ let () = {
     "result " ++ string_of_int(result) |> print_endline;
     "state " ++ string_of_int(state) |> print_endline;
 };
+
+module OptionEx = Monad.Ex(OptionMonad.Make);
+
+let () = {
+    open OptionMonad.Make;
+    open OptionEx;
+
+    let greaterThanFive = x => make(x > 5 ? Some(x * 2) : None);
+    let greaterThanTen = x => make(x > 10 ? Some(x * 2) : None);
+    let process = greaterThanFive >=> greaterThanTen;
+
+    switch(process(2) |> extract) {
+        | Some(x) => string_of_int(x) |> print_endline
+        | None => print_endline("None")
+    };
+};
