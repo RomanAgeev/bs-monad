@@ -17,3 +17,5 @@ module Make: T = {
     let make = x => x;
     let extract = x => x;
 };
+
+module Ex = Monad.Ex(Make);

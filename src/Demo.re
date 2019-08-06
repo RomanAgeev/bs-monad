@@ -74,11 +74,9 @@ let () = {
     "state " ++ string_of_int(state) |> print_endline;
 };
 
-module OptionEx = Monad.Ex(OptionMonad.Make);
-
 let () = {
     open OptionMonad.Make;
-    open OptionEx;
+    open OptionMonad.Ex;
 
     let greaterThanFive = x => make(x > 5 ? Some(x * 2) : None);
     let greaterThanTen = x => make(x > 10 ? Some(x * 2) : None);
