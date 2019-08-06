@@ -89,3 +89,31 @@ let () = {
         | None => print_endline("None")
     };
 };
+
+let () = {
+    open ListMonad.Make;
+    open ListMonad.Ex;
+    open Utils;
+
+    let enumerate = (length: int) => {
+        let rec aux = (~result=[], index) => index <= 0 ? result : aux(~result = [index, ...result], index - 1);
+        aux(length);
+    };
+
+    let string_of_list = li => {
+        let rec aux = (~result="", l) => switch l {
+            | [] => result
+            | [head, ...tail] => aux(~result = result ++ (result == "" ? "" : ", ") ++ head, tail)
+        };
+        "[" ++ aux(li) ++ "]";
+    };
+
+    enumerate(10) |> List.map(string_of_int) |> string_of_list |> print_endline;
+
+    let first = enumerate >> make;
+    let second = (x => [x * 2, x * -2]) >> make;
+    let third = string_of_int >> return;
+    let process = first >=> second >=> third;
+
+    process(10) |> extract |> string_of_list |> print_endline;
+};
