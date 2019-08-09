@@ -1,3 +1,5 @@
+open Utils;
+
 module type T = {
     include Monad.T;
 
@@ -12,11 +14,10 @@ module Make: T = {
 
     let bind = (x, f) => Js.Promise.then_(f, x);    
     let return = Js.Promise.resolve;
-
     let throw = x => Js.Promise.reject(raise(x));
     let catch = (x, f) => Js.Promise.catch(f, x);
-    let make = x => x;
-    let extract = x => x;
+    let make = id;
+    let extract = id;
 };
 
 module Ex = {

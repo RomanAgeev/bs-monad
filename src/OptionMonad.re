@@ -1,3 +1,5 @@
+open Utils;
+
 module type T = {
     include Monad.T;
 
@@ -13,9 +15,8 @@ module Make: T = {
         | None => None
     };
     let return = x => Some(x);
-
-    let make = x => x;
-    let extract = x => x;
+    let make = id;
+    let extract = id;
 };
 
 module Ex = Monad.Ex(Make);

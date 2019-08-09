@@ -1,3 +1,5 @@
+open Utils;
+
 module type T = {
     include Monad.T;
 
@@ -8,11 +10,11 @@ module type T = {
 module Make: T = {
     type t('a) = list('a);
 
+
     let bind = (li, f) => List.(li |> map(f) |> flatten);
     let return = x => [x];
-
-    let make = x => x;
-    let extract = x => x;
+    let make = id;
+    let extract = id;
 };
 
 module Ex = Monad.Ex(Make);

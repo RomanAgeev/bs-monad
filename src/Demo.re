@@ -33,8 +33,8 @@ let () = {
     open LoggerMonad;
     open LoggerEx;
 
-    let double = x => make(x * 2, " Double");
-    let tripple = x => make(x * 3, " Tripple");
+    let double = x => make((x * 2, " Double"));
+    let tripple = x => make((x * 3, " Tripple"));
     let process = double >=> tripple;
 
     let (x, log) = process(2) |> extract;
@@ -87,25 +87,6 @@ let () = {
     switch res {
         | Some(x) => string_of_int(x) |> print_endline
         | None => print_endline("None")
-    };
-};
-
-module ExceptionMonad = EitherMonad.Make({ type t = string; })
-module ExceptionEx = Monad.Ex(ExceptionMonad);
-
-let () = {
-    open ExceptionMonad;
-    open ExceptionEx;
-
-    let greaterThanFive = x => make(x > 5 ? Ok(x * 2) : Error("x less than 5"));
-    let greaterThanTen = x => make(x > 14 ? Ok(x * 2) : Error("x less than 10"));
-    let process = greaterThanFive >=> greaterThanTen;
-
-    let res = process(8) |> extract
-
-    switch res {
-        | Ok(x) => string_of_int(x) |> print_endline
-        | Error(message) => print_endline(message)
     };
 };
 

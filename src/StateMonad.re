@@ -1,3 +1,5 @@
+open Utils;
+
 module type T = {
     include Monad.T;
 
@@ -15,7 +17,6 @@ module Make = (S: { type t; }): (T with type s := S.t) => {
         st' |> (x |> f);
     };
     let return = x => st => (x, st);
-
-    let make = x => x;
-    let extract = x => x;
+    let make = id;
+    let extract = id;
 };
