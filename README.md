@@ -13,7 +13,7 @@ The following monads are available so far:
 7. Continuation Monad
 8. Indentity Monad
 
-## Example with fish (>=>) operator
+## Example with the "fish" (>=>) operator
 ```reason
 module TestWriterMonad = WriterMonad.Make({
     type t = string;
@@ -34,6 +34,29 @@ let () = {
   let process = mult >=> plus;
 
   let (res, log) = process(10) |> extract; // (22, "Multiply by 2, then Plus 2")
+};
+```
+## Example with the "bind" (>>=) operator
+```reason
+module TestWriterMonad = WriterMonad.Make({
+    type t = string;
+
+    let mappend = (s1, s2) => s1 ++ ", then " ++ s2;
+    let mempty = () => "";
+});
+
+module TestWriterMonadEx = Monad.Ex(TestWriterMonad);
+
+let () = {
+  open TestWriterMonad;
+  open TestWriterMonadEx;
+
+  let mult = x => make((x * 2, "Multiply by 2"));
+  let plus = x => make((x + 2, "Plus 2")); 
+
+  let monad = make((10, "Take 10")) >>= mult >>= plus;
+            
+  let (res, log) = monad |> extract; // (22, "Take 10, then Multiply by 2, then Plus 2")
 };
 ```
 
