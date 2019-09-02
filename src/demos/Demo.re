@@ -21,22 +21,6 @@ let () = {
 };
 
 let () = {
-    open OptionMonad.Make;
-    open OptionMonad.Ex;
-
-    let greaterThanFive = x => make(x > 5 ? Some(x * 2) : None);
-    let greaterThanTen = x => make(x > 10 ? Some(x * 2) : None);
-    let process = greaterThanFive >=> greaterThanTen;
-
-    let res = process(2) |> extract
-    
-    switch res {
-        | Some(x) => string_of_int(x) |> print_endline
-        | None => print_endline("None")
-    };
-};
-
-let () = {
     open ListMonad.Make;
     open ListMonad.Ex;
     open Utils;
