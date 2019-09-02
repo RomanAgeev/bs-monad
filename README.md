@@ -1,6 +1,6 @@
 # bs-monad
 
-This project provides the implementation of basic monads in ReasonML.
+The project provides an implementation of all basic monads in ReasonML.
 
 The following monads are available so far:
 
@@ -13,17 +13,17 @@ The following monads are available so far:
 7. Continuation Monad
 8. Indentity Monad
 
-# Build
+## Example with fish (>=>) operator
 ```
-npm run build
+open TestWriterMonad;
+open TestWriterMonadEx;
+
+let mult = x => make((x * 2, "Multiply by 2"));
+let plus = x => make((x + 2, "Plus 2")); 
+
+let process = mult >=> plus;
+
+let (res, log) = process(10) |> extract; // (22, "Multiply by 2, then Plus 2")
 ```
 
-# Build + Watch
-
-```
-npm run start
-```
-
-
-# Editor
-If you use `vscode`, Press `Windows + Shift + B` it will build automatically
+See [the tests](https://github.com/RomanAgeev/bs-monad/tree/master/__tests__) for more examples.
