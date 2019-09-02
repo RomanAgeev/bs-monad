@@ -12,7 +12,7 @@ module type T = {
 module Make: T = {
     type t('a) = Js.Promise.t('a);
 
-    let bind = (x, f) => Js.Promise.then_(f, x);    
+    let bind = (x, f) => Js.Promise.then_(f, x);
     let return = Js.Promise.resolve;
     let throw = x => Js.Promise.reject(raise(x));
     let catch = (x, f) => Js.Promise.catch(f, x);
