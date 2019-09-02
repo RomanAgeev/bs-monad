@@ -20,21 +20,6 @@ let () = {
         });
 };
 
-module ProductMonad = ReaderMonad.Make({ type t = (string, string); });
-
-module ProductEx = Monad.Ex(ProductMonad);
-
-let () = {
-    open ProductMonad;
-    open ProductEx;
-
-    let firstPlus = x => make(((e1, _)) => x ++ " " ++ e1);
-    let secondPlus = x => make(((_, e2)) => x ++ " " ++ e2);
-    let process = firstPlus >=> secondPlus;
-
-    ("Roman", "Ageev") |> (process("Hello") |> extract) |> print_endline;
-};
-
 module NumberMonad = StateMonad.Make({ type t = int });
 
 module NumberEx = Monad.Ex(NumberMonad);
