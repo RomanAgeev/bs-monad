@@ -19,18 +19,3 @@ let () = {
             return()
         });
 };
-
-module ContinuationMonad = ContMonad.Make({ type t = string; });
-module ContinuationEx = Monad.Ex(ContinuationMonad);
-
-let () = {
-    open ContinuationMonad;
-    open ContinuationEx;
-
-    let pipe = return(x => x + 1)
-        >>= (f => return(x => f(x * x)))
-        >>= (f => return(f(4)))
-        |> extract;
-
-    pipe(string_of_int) |> print_endline;
-};
