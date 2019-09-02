@@ -1,6 +1,16 @@
-# Basic Reason Template
+# bs-monad
 
-Hello! This project allows you to quickly get started with Reason and BuckleScript. If you wanted a more sophisticated version, try the `react` template (`bsb -theme react -init .`).
+This project provides the implementation of basic monads in ReasonML.
+
+The following monads are available so far:
+
+1. Writer Monad
+2. Reader Monad
+3. State Monad
+4. List Monad
+5. Option Monad
+6. Promise Monad
+7. Continuation Monad
 
 # Build
 ```
