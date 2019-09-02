@@ -11,6 +11,7 @@ The following monads are available so far:
 5. Option Monad
 6. Promise Monad
 7. Continuation Monad
+8. Indentity Monad
 
 # Build
 ```
